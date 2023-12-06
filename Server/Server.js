@@ -13,17 +13,17 @@ const PORT = process.env.PORT || 8000;
 
 mongoose.connect(DB_URI).then((e)=>console.log("mongodb connected ")).catch((e)=>console.log(e))
 // Multer setup for file uploads
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads/');
-//   },
-//   filename: function (req, file, cb) {
-//     const timestamp = Date.now(); // Get the current timestamp
-//     const originalName = path.parse(file.originalname).name; // Extract the original filename without extension
-//     const newFilename = `${originalName}-${timestamp}${path.extname(file.originalname)}`;
-//     cb(null, newFilename);
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    const timestamp = Date.now(); // Get the current timestamp
+    const originalName = path.parse(file.originalname).name; // Extract the original filename without extension
+    const newFilename = `${originalName}-${timestamp}${path.extname(file.originalname)}`;
+    cb(null, newFilename);
+  },
+});
 
 const upload = multer({ storage: storage });
 
