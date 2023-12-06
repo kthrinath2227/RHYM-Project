@@ -4,7 +4,7 @@ const cors=require('cors')
 const bodyParser=require('body-parser')
 app.use(cors())
 app.use(express.json())//middleware
-const path = require('path'); 
+const path = require('path');
 const multer=require('multer');
 const DB_URI="mongodb+srv://saikandula9278:ZPWADmVgFVdYYV0d@rhym-portal.ehvrq7e.mongodb.net/Rhym"
 const mongoose=require('mongoose')
