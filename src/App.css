@@ -34,7 +34,7 @@ h2 {
 .Card-container {
     width:100vw;
     max-height:100vh;
-    background-color: rgb(248, 255, 255);
+    background-color: rgb(255, 255, 255);
 }
 .Slider-container {
 transition:width 0.3s ease;
@@ -63,5 +63,29 @@ transition:width 0.3s ease;
 }
 
 .card {
-    padding:30px
+    margin-top:15px;
+    margin-left:30px ;
+}
+.active {
+    background: #fff;
+}
+.Expense-form-container {
+
+}
+.exp-card {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom:20px;
+    align-items: center;
+}
+.Calander {
+    width: 14vw;
+    height: 4vh;
+    border-color: rgb(111, 165, 245);
+    margin-right:20px;
+    border-width: 0.5px;
+    font-size: 15px;
+    padding:5px;
+
+
 }

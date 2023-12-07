@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-
+import { DataGrid, GridToolbarContainer, GridActionsCellItem } from '@mui/x-data-grid';
+import SaveIcon from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material';
+ 
 const EditableExpensesForm = () => {
   const [savedExpenses, setSavedExpenses] = useState([]);
   const [editedExpenses, setEditedExpenses] = useState([]);
@@ -15,7 +18,6 @@ const EditableExpensesForm = () => {
           date: moment(expense.date).format('YYYY-MM-DD'),
         }));
         setSavedExpenses(expensesWithFormattedDate);
-        // Initialize edited expenses with the fetched data
         setEditedExpenses(expensesWithFormattedDate.map(expense => ({ ...expense })));
       } catch (error) {
         console.error('Error fetching saved expenses:', error);
@@ -25,9 +27,10 @@ const EditableExpensesForm = () => {
     fetchSavedExpenses();
   }, []);
 
-  const handleInputChange = (index, field, value) => {
-    const updatedExpenses = [...editedExpenses];
-    updatedExpenses[index][field] = value;
+  const handleInputChange = (id, field, value) => {
+    const updatedExpenses = editedExpenses.map(expense =>
+      expense.id === id ? { ...expense, [field]: value } : expense
+    );
     setEditedExpenses(updatedExpenses);
   };
 
@@ -68,48 +71,71 @@ const EditableExpensesForm = () => {
     setEditedExpenses(savedExpenses.map(expense => ({ ...expense })));
   };
 
+  const handleAddRecord = () => {
+    const id = Math.max(...editedExpenses.map(expense => expense.id), 0) + 1;
+    setEditedExpenses([...editedExpenses, { id, name: '', age: '', isNew: true }]);
+  };
+
+  const handleEditClick = (id) => () => {
+    // Implement if needed
+  };
+
+  const handleSaveClick = (id) => () => {
+    // Implement if needed
+  };
+
+  const handleDeleteClick = (id) => () => {
+    setEditedExpenses(editedExpenses.filter(expense => expense.id !== id));
+  };
+
   return (
     <div>
       <h2>Saved Expenses</h2>
-      {editedExpenses.map((expense, index) => (
-        <div key={index}>
-          <label>
-            EID:
-            <input type="text" value={expense.eid} onChange={(e) => handleInputChange(index, 'eid', e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Category:
-            <input type="text" value={expense.category} onChange={(e) => handleInputChange(index, 'category', e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Description:
-            <input type="text" value={expense.description} onChange={(e) => handleInputChange(index, 'description', e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Amount:
-            <input type="number" value={expense.amount} onChange={(e) => handleInputChange(index, 'amount', e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Date:
-            <input type="date" value={expense.date} onChange={(e) => handleInputChange(index, 'date', e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Receipt:
-            <input type="text" value={expense.receipt} onChange={(e) => handleInputChange(index, 'receipt', e.target.value)} />
-          </label>
-          <hr />
-        </div>
-      ))}
-
-      <h2>Actions</h2>
-      <button onClick={handleSaveChanges}>Save</button>
-      <button onClick={handleSubmitForApproval}>Submit for Approval</button>
-      <button onClick={handleDiscardChanges}>Discard</button>
+      <div style={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={editedExpenses}
+          columns={[
+            { field: 'eid', headerName: 'EID', width: 100, editable: true },
+            { field: 'category', headerName: 'Category', width: 150, editable: true },
+            { field: 'description', headerName: 'Description', width: 200, editable: true },
+            { field: 'amount', headerName: 'Amount', width: 120, editable: true },
+            { field: 'date', headerName: 'Date', type: 'date', width: 120, editable: true },
+            { field: 'receipt', headerName: 'Receipt', width: 200, editable: true },
+            {
+              field: 'actions',
+              headerName: 'Actions',
+              width: 200,
+              renderCell: (params) => (
+                <>
+                  <GridActionsCellItem
+                    icon={<SaveIcon />}
+                    label="Save"
+                    onClick={handleSaveClick(params.id)}
+                  />
+                  <GridActionsCellItem
+                    icon={<DeleteIcon />}
+                    label="Delete"
+                    onClick={handleDeleteClick(params.id)}
+                  />
+                </>
+              ),
+            },
+          ]}
+          pageSize={5}
+          checkboxSelection
+          disableSelectionOnClick
+          onCellEditCommit={(params) =>
+            handleInputChange(params.id, params.field, params.props.value)
+          }
+        />
+      </div>
+      <div>
+        <h2>Actions</h2>
+        <button onClick={handleSaveChanges}>Save</button>
+        <button onClick={handleSubmitForApproval}>Submit for Approval</button>
+        <button onClick={handleDiscardChanges}>Discard</button>
+        <button onClick={handleAddRecord}>Add Record</button>
+      </div>
     </div>
   );
 };

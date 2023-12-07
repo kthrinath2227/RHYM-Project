@@ -6,11 +6,13 @@ import ReceiptRoundedIcon from '@mui/icons-material/ReceiptRounded';
 import MonetizationOnRoundedIcon from '@mui/icons-material/MonetizationOnRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Dashboard from './Dashboard';
-import ExpenseForm from './Status';
+import ExpenseForm from './CreateExp';
 import ExpenseReport from './ExpenseReport2';
 import ApprovalForm from './ExpenseApproval';
+import EditableExpensesForm from './Saved';
+import SaveIcon from '@mui/icons-material/Save';
 
-// ... (your other imports)
+
 
 const Slider = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -20,6 +22,23 @@ const Slider = () => {
     setSelectedMenuItem(menuItem);
     setCollapsed(!collapsed);
   };
+  const renderSelectedComponent = () => {
+    switch (selectedMenuItem) {
+      case 'dashboard':
+        return <Dashboard />;
+      case 'createExpense':
+        return <ExpenseForm />;
+      case 'EditableExpensesForm':
+        return <EditableExpensesForm/>;
+      case 'expenseReport':
+        return <ExpenseReport />;
+      case 'ApprovalForm':
+        return <ApprovalForm />;
+      default:
+        return <Dashboard />;
+    }
+  };
+  
 
 
 
@@ -47,7 +66,14 @@ const Slider = () => {
               icon={<ReceiptRoundedIcon />}
               onClick={() => handleMenuClick('createExpense')}
             >
-              Create Expense
+              Create Expense 
+            </MenuItem>
+            <MenuItem
+              className={` ${selectedMenuItem === 'EditableExpensesForm' ? 'active' : ''}`}
+              icon={<SaveIcon/>}
+              onClick={() => handleMenuClick('EditableExpensesForm')}
+            >
+              Saved Expense 
             </MenuItem>
             <MenuItem
               className={` ${selectedMenuItem === 'expenseReport' ? 'active' : ''}`}
@@ -74,7 +100,7 @@ const Slider = () => {
         </Sidebar>
       </div>
       <div className="Card-container">
-        <div className='card'></div>
+        <div className='card'>{renderSelectedComponent()}</div>
       </div>
     </div>
   );
