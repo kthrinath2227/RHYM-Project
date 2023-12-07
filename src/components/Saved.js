@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { DataGrid, GridToolbarContainer, GridActionsCellItem } from '@mui/x-data-grid';
-import SaveIcon from '@mui/icons-material';
-import DeleteIcon from '@mui/icons-material';
- 
+import { DataGrid,  GridActionsCellItem } from '@mui/x-data-grid';
+import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 const EditableExpensesForm = () => {
   const [savedExpenses, setSavedExpenses] = useState([]);
   const [editedExpenses, setEditedExpenses] = useState([]);
@@ -92,42 +91,51 @@ const EditableExpensesForm = () => {
     <div>
       <h2>Saved Expenses</h2>
       <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={editedExpenses}
-          columns={[
-            { field: 'eid', headerName: 'EID', width: 100, editable: true },
-            { field: 'category', headerName: 'Category', width: 150, editable: true },
-            { field: 'description', headerName: 'Description', width: 200, editable: true },
-            { field: 'amount', headerName: 'Amount', width: 120, editable: true },
-            { field: 'date', headerName: 'Date', type: 'date', width: 120, editable: true },
-            { field: 'receipt', headerName: 'Receipt', width: 200, editable: true },
-            {
-              field: 'actions',
-              headerName: 'Actions',
-              width: 200,
-              renderCell: (params) => (
-                <>
-                  <GridActionsCellItem
-                    icon={<SaveIcon />}
-                    label="Save"
-                    onClick={handleSaveClick(params.id)}
-                  />
-                  <GridActionsCellItem
-                    icon={<DeleteIcon />}
-                    label="Delete"
-                    onClick={handleDeleteClick(params.id)}
-                  />
-                </>
-              ),
-            },
-          ]}
-          pageSize={5}
-          checkboxSelection
-          disableSelectionOnClick
-          onCellEditCommit={(params) =>
-            handleInputChange(params.id, params.field, params.props.value)
-          }
-        />
+      <DataGrid
+  rows={editedExpenses}
+  columns={[
+    { field: 'eid', headerName: 'EID', width: 100, editable: true },
+    { field: 'category', headerName: 'Category', width: 150, editable: true },
+    { field: 'description', headerName: 'Description', width: 200, editable: true },
+    { field: 'amount', headerName: 'Amount', width: 120, editable: true },
+    {
+      field: 'date',
+      headerName: 'Date',
+      type: 'date',
+      width: 120,
+      editable: true,
+      valueGetter: (params) => new Date(params.row.date),
+    },
+    { field: 'receipt', headerName: 'Receipt', width: 200, editable: true },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 200,
+      renderCell: (params) => (
+        <>
+          <GridActionsCellItem
+            icon={<SaveIcon />}
+            label="Save"
+            onClick={handleSaveClick(params.id)}
+          />
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(params.id)}
+          />
+        </>
+      ),
+    },
+  ]}
+  pageSize={5}
+  checkboxSelection
+  disableSelectionOnClick
+  onCellEditCommit={(params) =>
+    handleInputChange(params.id, params.field, params.props.value)
+  }
+  getRowId={(row) => row._id}
+/>
+
       </div>
       <div>
         <h2>Actions</h2>

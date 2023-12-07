@@ -167,7 +167,7 @@ const CreateExpense = () => {
           style={{marginRight:"20px", width:"15vw"}}
            multiline
            maxRows={4}
-           type="number"
+           type="text"
            name="amount"
            value={expense.amount}
            onChange={(e) => handleInputChange(e, index)}
