@@ -2,8 +2,7 @@ import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { Typography, Paper } from '@mui/material';
-// import { red } from '@mui/material/colors';
+
 
 
 
@@ -24,15 +23,17 @@ export default function TwoSimplePieChart() {
       }, []);
     
   return (
-    <PieChart
+      <div className='Piechart-Container-1'>
+        <div className='card-paper '>
+        <h2>Status Report</h2>
+          <div className='card-paper-1'>
+          <PieChart
       series={[
     
         {
           data: expenseData.map((item) => ({ label: item._id, value: item.count, color: item.color})),
-          cx: 500,
-          cy: 200,
-          innerRadius: 40,
-          outerRadius: 80,
+          innerRadius: 70,
+          outerRadius: 100,
         },
       ]}
       height={300}
@@ -40,5 +41,13 @@ export default function TwoSimplePieChart() {
         legend: { hidden: true },
       }}
     />
+  
+ 
+    
+    
+    </div>
+    </div>
+    </div>
+    
   );
 }

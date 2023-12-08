@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ReceiptRoundedIcon from '@mui/icons-material/ReceiptRounded';
@@ -34,6 +33,8 @@ const Slider = () => {
         return <ExpenseReport />;
       case 'ApprovalForm':
         return <ApprovalForm />;
+        // case 'Logout':
+        // return <Logout/>;
       default:
         return <Dashboard />;
     }
@@ -44,61 +45,32 @@ const Slider = () => {
 
   return (
     <div className="Container">
-      <div className={`Slider-container ${collapsed ? 'collapsed' : ''}`}>
-        <Sidebar rootStyles={{ backgroundColor: '#0b2a49' }} className="slider" collapsed={collapsed}>
-          <Menu>
-            <MenuItem
-              className={`menu1 ${selectedMenuItem === 'menu' ? 'active' : ''}`}
-              icon={<MenuRoundedIcon />}
-              onClick={() => handleMenuClick('menu')}
-            >
-              <h2>MENU</h2>
-            </MenuItem>
-            <MenuItem
-              className={` ${selectedMenuItem === 'dashboard' ? 'active' : ''}`}
-              icon={<GridViewRoundedIcon />}
-              onClick={() => handleMenuClick('dashboard')}
-            >
-              Dashboard
-            </MenuItem>
-            <MenuItem
-              className={` ${selectedMenuItem === 'createExpense' ? 'active' : ''}`}
-              icon={<ReceiptRoundedIcon />}
-              onClick={() => handleMenuClick('createExpense')}
-            >
-              Create Expense 
-            </MenuItem>
-            <MenuItem
-              className={` ${selectedMenuItem === 'EditableExpensesForm' ? 'active' : ''}`}
-              icon={<SaveIcon/>}
-              onClick={() => handleMenuClick('EditableExpensesForm')}
-            >
-              Saved Expense 
-            </MenuItem>
-            <MenuItem
-              className={` ${selectedMenuItem === 'expenseReport' ? 'active' : ''}`}
-              icon={<MonetizationOnRoundedIcon />}
-              onClick={() => handleMenuClick('expenseReport')}
-            >
-              Expense Report
-            </MenuItem>
-            <MenuItem
-              className={` ${selectedMenuItem === 'ApprovalForm' ? 'active' : ''}`}
-              icon={<MonetizationOnRoundedIcon />}
-              onClick={() => handleMenuClick('ApprovalForm')}
-            >
-              Expense Approval
-            </MenuItem>
-            <MenuItem
-              className={` ${selectedMenuItem === 'logout' ? 'active' : ''}`}
-              icon={<LogoutRoundedIcon />}
-              onClick={() => handleMenuClick('logout')}
-            >
-              Logout
-            </MenuItem>
-          </Menu>
-        </Sidebar>
-      </div>
+        <div className={`slider ${collapsed ? 'collapsed' : ''}`}>
+          <div className={`menu1 ${selectedMenuItem === 'menu' ? 'active' : ''}`} onClick={() => handleMenuClick('menu')}> 
+              <MenuRoundedIcon style={{marginRight:"10px"}} className={`${collapsed ? 'icon' : ''}`}/> <h3> Menu</h3>
+          </div>
+          <div className={`menu1 ${selectedMenuItem === 'dashboard' ? 'active' : ''}`}  onClick={() => handleMenuClick('dashboard')}>
+            <GridViewRoundedIcon style={{marginRight:"10px"}} className={` ${collapsed ? 'icon' : ''}`} /> Dashboard 
+          </div>
+          <div  className={`menu1 ${selectedMenuItem === 'createExpense' ? 'active' : ''}`} onClick={() => handleMenuClick('createExpense')}> 
+            <ReceiptRoundedIcon style={{marginRight:"10px"}} className={` ${collapsed ? 'icon' : ''}`}/> Create Expense
+
+          </div>
+          <div className={`menu1 ${selectedMenuItem === 'EditableExpensesForm' ? 'active' : ''}`}onClick={() => handleMenuClick('EditableExpensesForm')}>
+            <SaveIcon style={{marginRight:"10px"}} className={`${collapsed ? 'icon' : ''}`}/> Saved Expense 
+          </div>
+          <div className={`menu1 ${selectedMenuItem === 'expenseReport' ? 'active' : ''}`} onClick={() => handleMenuClick('expenseReport')}>
+            <MonetizationOnRoundedIcon style={{marginRight:"10px"}} className={` ${collapsed ? 'icon' : ''}`} /> Expense Report
+          </div>
+          <div    className={`menu1 ${selectedMenuItem === 'ApprovalForm' ? 'active' : ''}`} onClick={() => handleMenuClick('ApprovalForm')}>
+            <MonetizationOnRoundedIcon style={{marginRight:"10px"}} className={` ${collapsed ? 'icon' : ''}`} />  Expense Approval
+          </div>
+          {/* <div  className={`menu1 ${selectedMenuItem === 'logout' ? 'active' : ''}`} onClick={() => handleMenuClick('logout')}>
+            <LogoutRoundedIcon style={{marginRight:"10px"}} className={` ${collapsed ? 'icon' : ''}`}/> Logout
+
+          </div> */}
+        </div>
+        
       <div className="Card-container">
         <div className='card'>{renderSelectedComponent()}</div>
       </div>

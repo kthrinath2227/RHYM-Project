@@ -121,7 +121,7 @@ const CreateExpense = () => {
   };
 
   return (
-    <div className='Expense-form-container'>
+    <div>
       <h1>Create Expenses</h1>
       {expenses.map((expense, index) => (
         <div className='exp-card' key={index}>

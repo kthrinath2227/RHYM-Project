@@ -10,14 +10,17 @@ body {
     display: flex;
 }
 .slider{
- 
     height: 100vh;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-
-    border-width: 0px;
-   
-   
+    width:10vw;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-width: 0px;  
+    background-color: #7356f0;
+    color:white;
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    
 }
 h1 {
     color: #00151d;
@@ -25,8 +28,10 @@ h1 {
     font-size: 40px;
 }
 .menu1 {
-    margin-bottom: 40px;
-    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    padding:10px;
 }
 h2 {
     color: rgb(22, 22, 22);
@@ -34,58 +39,95 @@ h2 {
 .Card-container {
     width:100vw;
     max-height:100vh;
-    background-color: rgb(255, 255, 255);
-}
-.Slider-container {
-transition:width 0.3s ease;
-
-
-
-}
-.Slider-container.collapsed {
-    width:5vw;
-}
-
-
-.Piechart-Container{
-    width: 70vw;
-    height: 30vh;
+    background-color: rgb(238, 238, 238);
     
 }
-
-.Typography-container {
-    background-color: #fffefe;
-   border-radius: 20px;
-   box-shadow: 1px 3px 3px 3px rgb(197, 197, 197);
-   margin: 20px;
-   min-height: 6vh;
-
+.slider {
+transition:width 0.1s ease;
 }
+.slider.collapsed {
+    width:4vw;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-width: 0px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 5px;     
+}
+.icon {
+    margin-left: 10px;
+}
+
 
 .card {
     margin-top:15px;
     margin-left:30px ;
 }
 .active {
-    background: #fff;
+    background: rgb(238, 238, 238);
+    color:black;
 }
-.Expense-form-container {
 
-}
 .exp-card {
     display: flex;
     flex-wrap: wrap;
     margin-bottom:20px;
     align-items: center;
 }
-.Calander {
-    width: 14vw;
-    height: 4vh;
-    border-color: rgb(111, 165, 245);
-    margin-right:20px;
-    border-width: 0.5px;
-    font-size: 15px;
-    padding:5px;
+
+.month-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+.month-card {
+    background-color: #ffff;
+    height:8vh;
+    width:20vw;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;  
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: medium;
+}
+.Piechart-Container {
+    width:38vw;
+    height:18vw;
+    border-radius:30px;
+    background-color: #ffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 
+}
+.card-paper {
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   
+}
+.Piechart-Container-1 {
+    width:18vw;
+    height:18vw;
+    border-radius:30px;
+    background-color: #ffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0, 0, 0.19);
+}
+.card-paper-1{
+    margin-left: 52px;
+}
+.barchat-container {
+    width:60vw;
+}
+.flex-charts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right: 30px;
 }

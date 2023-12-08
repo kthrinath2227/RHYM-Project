@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function SimpleCharts() {
   const [chartData, setChartData] = useState({ xAxis: [], series: [] });
-  const barColors = ['#FF5733', '#3399FF', '#33FF33'];
+  const barColors = ['#3399FF', '#3399FF', '#33FF33'];
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,28 +47,21 @@ export default function SimpleCharts() {
   }, []); 
 
   return (
-    // <BarChart
-    //   xAxis={chartData.xAxis}
-    //   series={chartData.series}
-    //   width={300}
-    //   height={300}
-    //   colors={barColors}
-    // />
-    <div>
+    <div className='Piechart-Container barchat-container '>
+    <div className='card-paper-1'>
     {chartData.xAxis.length > 0 && chartData.series.length > 0 ? (
       <BarChart
         xAxis={chartData.xAxis}
         series={chartData.series}
-        width={300}
-        height={300}
+        width={400}
+        height={360}
         colors={barColors}
       />
     ) : (
-      <div>
-        {/* Render a message or placeholder content when there is no data */}
-        
+      <div> 
       </div>
     )}
+    </div>
   </div>
   );
 }
