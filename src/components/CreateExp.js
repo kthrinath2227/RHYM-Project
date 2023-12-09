@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField } from '@mui/material';
+import { TextField,Card, CardHeader, Divider } from '@mui/material';
 import { styled } from '@mui/material';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -13,6 +13,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; 
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+
 
 
 
@@ -115,7 +117,14 @@ const CreateExpense = () => {
 
   return (
     <div>
-      <h1>Create Expenses</h1>
+     <Card style={{padding:'10px'}}>
+      <CardHeader title={
+          <React.Fragment>
+            <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh', marginRight:'10px' }}/> 
+            Create Expenses
+          </React.Fragment> 
+      } />
+      <Divider style={{marginBottom:'20px'}} />
       {expenses.map((expense, index) => (
         <div className='exp-card' key={index}>
         <TextField style={{marginRight:"20px", width:"15vw"}}
@@ -196,19 +205,18 @@ const CreateExpense = () => {
       {expenses.length > 0 && (
         <div>
         <Button style={{marginRight:"20px", textAlign:"center"}} variant="contained" color="success" size="medium" type="button" onClick={() => handleFormSubmit('save')}>
-          <SaveIcon style={{height:"1.5vh"}}/> Save
+          <SaveIcon style={{height:"1.5vh" , marginRight:'5px'}}/> Save
         </Button>
         <Button style={{marginRight:"20px"}} variant="contained" color="error" size="medium" type="button" onClick={() => setExpenses([{ eid: '', category: '', description: '', amount: 0, date: '', receipt: null }])}>
-       <CancelIcon/> Cancel
+       <CancelIcon style={{height:"1.5vh" , marginRight:'5px'}} /> Cancel
         </Button>
         <Button style={{marginRight:"20px"}} variant="contained" color="secondary" size="medium" type="button"  onClick={() => handleFormSubmit('submit')} >
-         <TurnedInNotIcon/> Submit
+         <TurnedInNotIcon style={{height:"1.5vh" , marginRight:'5px'}}/> Submit
         </Button>
       </div>
       )}
-      {/* <div>
-          <EditableExpensesForm/>
-      </div> */}
+     </Card>
+     
     </div>
   );
 };

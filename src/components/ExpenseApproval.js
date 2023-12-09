@@ -135,7 +135,7 @@ const updatedResponse = await axios.get('http://localhost:8000/getSubmittedExpen
       <CardHeader
         title={
           <React.Fragment>
-            <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh' }}/> 
+            <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh', marginRight:'10px' }}/> 
             Expense Approval
           </React.Fragment>
         }
@@ -144,7 +144,7 @@ const updatedResponse = await axios.get('http://localhost:8000/getSubmittedExpen
       <div className="container">
       {submittedExpenses && submittedExpenses.length > 0 ? (
         <TableContainer  component={Paper}>
-          <Table style={{background:'green',color:'white'}}>
+          <Table >
             <TableHead >
               <TableRow>
                 <TableCell style={{color:'white', whiteSpace: 'nowrap'}}>EID</TableCell>
@@ -174,13 +174,13 @@ const updatedResponse = await axios.get('http://localhost:8000/getSubmittedExpen
                   <Tooltip title="Approve" arrow>
                       <Button onClick={() => handleThumbsUpClick(index)}
                 style={{ color: thumbsUpClicked[index] ? 'green' : 'blue' }}>
-                        <ThumbUpIcon />
+                        Approve
                       </Button>
                     </Tooltip>
                     <Tooltip title="Reject" arrow>
                       <Button onClick={() => handleThumbsDownClick(index)}
                 style={{ color: thumbsDownClicked[index] ? 'red' : 'blue' }}>
-                        <ThumbDownIcon />
+                        Reject
                       </Button>
                     </Tooltip>
                   </TableCell>
@@ -201,7 +201,7 @@ const updatedResponse = await axios.get('http://localhost:8000/getSubmittedExpen
       ) : (
         <TableContainer component={Paper}>
         <Table>
-          <TableHead style={{ background: 'blue', color: 'white' }}>
+          <TableHead style={{ background: 'blue', color: 'black' }}>
             <TableRow>
             <TableCell style={{color:'white'}}>EID</TableCell>
                 <TableCell style={{color:'white'}}>Category</TableCell>

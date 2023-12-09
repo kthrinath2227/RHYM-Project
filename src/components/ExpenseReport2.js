@@ -79,11 +79,11 @@ const SearchAndFilter = () => {
   };
 
   return (
-   <Card style={{width:'90vw',  padding:"10px"}}>
+   <Card style={{width:'88vw',  padding:"10px"}}>
    <CardHeader title={
           <React.Fragment>
-            <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh' }}/> 
-            Saved Expenses
+            <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh' , marginRight:'10px'}}/> 
+            Expenses Rport
           </React.Fragment> 
       }/>
      <div className="search-and-filter-container">

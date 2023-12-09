@@ -5,7 +5,9 @@ import { DataGrid,  GridActionsCellItem } from '@mui/x-data-grid';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Card, CardHeader, Divider} from '@mui/material';
-
+import Button from '@mui/material/Button';
+import CancelIcon from '@mui/icons-material/Cancel';
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 
@@ -99,7 +101,7 @@ const EditableExpensesForm = () => {
   };
 
   return (
-    <Card style={{width:'90vw',  padding:"10px"}}>
+    <Card style={{width:'89vw',  padding:"10px"}}>
       <CardHeader title={
           <React.Fragment>
             <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh' }}/> 
@@ -109,7 +111,7 @@ const EditableExpensesForm = () => {
       <Divider/>
       <div>
     
-      <div style={{ height: 400, widhth:'85vw'  }}>
+      <div style={{ height: 400, widhth:'85vw', marginBottom:'20px' }}>
       <DataGrid style={{ }}
     rows={editedExpenses}
       columns={[
@@ -154,14 +156,18 @@ const EditableExpensesForm = () => {
   }
   getRowId={(row) => row._id}
 />
-
       </div>
       <div>
-        <h2>Actions</h2>
-        <button onClick={handleSaveChanges}>Save</button>
-        <button onClick={handleSubmitForApproval}>Submit for Approval</button>
-        <button onClick={handleDiscardChanges}>Discard</button>
-        <button onClick={handleAddRecord}>Add Record</button>
+        {/* <button onClick={handleAddRecord}>Add Record</button> */}
+        <Button style={{marginRight:"20px", textAlign:"center"}} variant="contained" color="success" size="medium" type="button" onClick={handleSaveChanges}>
+          <SaveIcon style={{height:"1.5vh" , marginRight:'5px'}}/> Save
+        </Button>
+        <Button style={{marginRight:"20px"}} variant="contained" color="error" size="medium" type="button" onClick={handleDiscardChanges}>
+       <CancelIcon style={{height:"1.5vh" , marginRight:'5px'}}/> Cancel
+        </Button>
+        <Button style={{marginRight:"20px"}} variant="contained" color="secondary" size="medium" type="button"  onClick={handleSubmitForApproval}>
+         <TurnedInNotIcon style={{height:"1.5vh" , marginRight:'5px'}}/> Submit
+        </Button>
       </div>
     </div>
     </Card>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import { Card, } from '@mui/material';
 import PieChart from './PieChart';
 import Barchart from './Barchart';
 import DonutChart from './DonutChart';
 import axios from 'axios';
+import BarsDataset from './digitalComponent';
 
 const Dashboard = () => {
   const [currentMonthCost, setCurrentMonthCost] = useState(null);
@@ -27,17 +28,22 @@ const Dashboard = () => {
 
   return (
    <div>
+   <Card style={{padding:'10px'}}>
    <div className='month-container'>
       <div className='month-card'>Expenses This Month : {currentMonthCost ? `${currentMonthCost}` : '0'} ₹</div>
       <div className='month-card'>Expenses Last Month : {lastMonthCost ? `${lastMonthCost}` : '0'} ₹</div>
    </div>
   <div className='container-card-list'>
-   <PieChart />
    <div className='flex-charts'>
-   <DonutChart />
+   <PieChart />
    <Barchart />
    </div>
+   <div className='flex-charts'>
+   <DonutChart />
+   <BarsDataset/>
    </div>
+   </div>
+   </Card>
     
    </div>
   );

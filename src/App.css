@@ -128,12 +128,13 @@ transition:width 0.1s ease;
     margin-left: 52px;
     text-align: center;
 }
-.barchat-container {
-    width:60vw;
-    margin-left: 30px;
-}
+
 .flex-charts {
     display: flex;
     flex-wrap: wrap;
     margin-top: 30px;
+    justify-content: space-around
+}
+.cot {
+    width:65vw;
 }
