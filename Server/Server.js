@@ -506,6 +506,20 @@ app.get('/getListOfMonths', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+app.get('/getListOfMonths', async (req, res) => {
+  try {
+    const moment = require('moment');
+
+    const distinctMonths = await Expense.distinct('date', {});
+
+    const listOfMonths = distinctMonths.map(date => moment(date).format('MMMM-YYYY'));
+
+    res.json(listOfMonths);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 
   app.listen(PORT, () => {
