@@ -26,17 +26,23 @@ export default function TwoSimplePieChart() {
       <div className='Piechart-Container-1'>
         <div className='card-paper '>
         <h2>Status Report</h2>
-          <div className='card-paper-1'>
+          <div className='card-paper'>
           <PieChart
       series={[
     
         {
           data: expenseData.map((item) => ({ label: item._id, value: item.count, color: item.color})),
-          innerRadius: 70,
+          innerRadius: 50,
           outerRadius: 100,
+          paddingAngle: 5,
+          cornerRadius: 5,
+          startAngle: -90,
+          endAngle: 180,
+           
         },
       ]}
-      height={300}
+      height={400}
+      width={460}
       slotProps={{
         legend: { hidden: true },
       }}

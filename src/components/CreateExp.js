@@ -40,13 +40,6 @@ const CreateExpense = () => {
     width: 1,
   });
  
-
-  // const handleInputChange = (e, index) => {
-  //   const { name, value } = e.target;
-  //   const updatedExpenses = [...expenses];
-  //   updatedExpenses[index][name] = value;
-  //   setExpenses(updatedExpenses);
-  // };
   const handleInputChange = (e, index) => {
     if (e && e.target) {
       const { name, value } = e.target;
@@ -189,7 +182,7 @@ const CreateExpense = () => {
           </Button>
          
           {index === expenses.length - 1 && (
-            <Fab style={{width:"40px", height:"4vh"}} color="primary" aria-label="add" type="button" onClick={handleAddRow}>
+            <Fab style={{width:"55px", height:"5vh", marginLeft:"15px"}} color="primary" aria-label="add" type="button" onClick={handleAddRow}>
               <AddIcon />
             </Fab>
           )}
@@ -202,14 +195,14 @@ const CreateExpense = () => {
       ))}
       {expenses.length > 0 && (
         <div>
-        <Button style={{marginRight:"20px", textAlign:"center"}} variant="contained" color="success" size="small" type="button" onClick={() => handleFormSubmit('save')}>
+        <Button style={{marginRight:"20px", textAlign:"center"}} variant="contained" color="success" size="medium" type="button" onClick={() => handleFormSubmit('save')}>
           <SaveIcon style={{height:"1.5vh"}}/> Save
         </Button>
         <Button style={{marginRight:"20px"}} variant="contained" color="error" size="medium" type="button" onClick={() => setExpenses([{ eid: '', category: '', description: '', amount: 0, date: '', receipt: null }])}>
        <CancelIcon/> Cancel
         </Button>
-        <Button style={{marginRight:"20px"}} variant="contained" color="secondary" size="large" type="button"  onClick={() => handleFormSubmit('submit')} >
-         <TurnedInNotIcon/> Submit for Approval
+        <Button style={{marginRight:"20px"}} variant="contained" color="secondary" size="medium" type="button"  onClick={() => handleFormSubmit('submit')} >
+         <TurnedInNotIcon/> Submit
         </Button>
       </div>
       )}

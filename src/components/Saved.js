@@ -4,6 +4,17 @@ import moment from 'moment';
 import { DataGrid,  GridActionsCellItem } from '@mui/x-data-grid';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Card, CardHeader, Divider} from '@mui/material';
+
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+
+
+
+
+
+
+
+
 const EditableExpensesForm = () => {
   const [savedExpenses, setSavedExpenses] = useState([]);
   const [editedExpenses, setEditedExpenses] = useState([]);
@@ -88,12 +99,20 @@ const EditableExpensesForm = () => {
   };
 
   return (
-    <div>
-      <h2>Saved Expenses</h2>
-      <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-  rows={editedExpenses}
-  columns={[
+    <Card style={{width:'90vw',  padding:"10px"}}>
+      <CardHeader title={
+          <React.Fragment>
+            <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh' }}/> 
+            Saved Expenses
+          </React.Fragment> 
+      }/>
+      <Divider/>
+      <div>
+    
+      <div style={{ height: 400, widhth:'85vw'  }}>
+      <DataGrid style={{ }}
+    rows={editedExpenses}
+      columns={[
     { field: 'eid', headerName: 'EID', width: 100, editable: true },
     { field: 'category', headerName: 'Category', width: 150, editable: true },
     { field: 'description', headerName: 'Description', width: 200, editable: true },
@@ -145,6 +164,7 @@ const EditableExpensesForm = () => {
         <button onClick={handleAddRecord}>Add Record</button>
       </div>
     </div>
+    </Card>
   );
 };
 

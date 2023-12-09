@@ -33,17 +33,19 @@ const PieChartComponent = () => {
 
   return (
     <div className="Piechart-Container">
-    <div className='card-paper'>
-    <h2>Expenses Category Wise</h2>
-    {expenseData.length > 0 ? (
-      <PieChart series={getChartData()} width={500} height={250} />
-    ) : (
-      <div></div>
-    )}
+      <div className='card-paper'>
+        <h2>Expenses Category Wise</h2>
+        {expenseData.length > 0 ? (
+          <PieChart
+            series={getChartData()}
+            width={500}
+            height={300}   
+          />
+        ) : (
+          <div></div>
+        )}
+      </div>
     </div>
- 
-  </div>
-
   );
 };
 

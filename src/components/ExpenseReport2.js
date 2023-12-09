@@ -1,17 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import debounce from 'lodash.debounce';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+  Card,
+  CardHeader,} from '@mui/material';
+  import FactCheckIcon from '@mui/icons-material/FactCheck';
 
-const ExpenseReport = () => {
+
+const SearchAndFilter = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [months, setMonths] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(moment().format('MMMM-YYYY'));
   const [expenseData, setExpenseData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
+  const tableRef = useRef();
 
   useEffect(() => {
-    // Fetch the list of months from your backend API
     const fetchMonths = async () => {
       try {
         const response = await axios.get('http://localhost:8000/getListOfMonths');
@@ -25,7 +42,6 @@ const ExpenseReport = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch expense data for the selected month from your backend API
     const fetchExpenseDataByMonth = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/getApprovedRecordsByMonth?selectedMonth=${selectedMonth}`);
@@ -43,8 +59,6 @@ const ExpenseReport = () => {
 
   const handleSearch = debounce(async (query) => {
     const lowerCaseQuery = query.toLowerCase();
-
-    // If the query is empty, revert to the original data
     const filteredResults = lowerCaseQuery
       ? originalData.filter((expense) =>
           expense.category.toLowerCase().includes(lowerCaseQuery) ||
@@ -52,72 +66,92 @@ const ExpenseReport = () => {
         )
       : originalData;
 
-    // Update the filtered data in the state
-    setExpenseData([...filteredResults]); // Make sure to create a new array to trigger re-render
-  }, 300); // Adjust the debounce delay as needed
+    setExpenseData([...filteredResults]);
+  }, 300);
+
+
+
+  const handleDownloadPDF = () => {
+    const pdf = new jsPDF();
+    pdf.text(`Expense Data for ${selectedMonth}`, 14, 10);
+    pdf.autoTable({ html: '#expense-table' });
+    pdf.save(`Expense_Data_${selectedMonth}.pdf`);
+  };
 
   return (
-    <div>
-      <div>
-        <input
+   <Card style={{width:'90vw',  padding:"10px"}}>
+   <CardHeader title={
+          <React.Fragment>
+            <FactCheckIcon  style={{ fontSize: '40px',position:'relative',top:'1vh' }}/> 
+            Saved Expenses
+          </React.Fragment> 
+      }/>
+     <div className="search-and-filter-container">
+
+      <div className="search-and-filter-controls">
+        <TextField
+        style={{marginRight:'15px',}}
           type="text"
-          placeholder="Search by Category or Description"
+          label="Search"
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
             handleSearch(e.target.value);
           }}
         />
-      </div>
-      <div>
-        <label>By Month:</label>
-        <select
+        <Select
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
+          label="Select Month"
         >
-          <option value="">Select Month</option>
+          <MenuItem value="">Select Month</MenuItem>
           {months.map((month) => (
-            <option key={month} value={month}>
+            <MenuItem key={month} value={month}>
               {month}
-            </option>
+            </MenuItem>
           ))}
-        </select>
+        </Select>
       </div>
       {expenseData.length > 0 && (
-        <div>
-          <h2>Expense Data for {selectedMonth}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>EID</th>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Approved Date</th>
-                <th>Approved By</th>
-              </tr>
-            </thead>
-            <tbody>
+        <Paper style={{width:'88vw', margin:"20px", padding:"10px"}} className="expense-table-paper">
+          <h2 className="expense-table-heading">Expense Data for {selectedMonth}</h2>
+          <Table  id="expense-table" ref={tableRef}>
+            <TableHead style={{background:'black',color:'white'}}>
+              <TableRow>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>EID</TableCell>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>Date</TableCell>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>Category</TableCell>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>Description</TableCell>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>Amount</TableCell>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>Status</TableCell>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>Approved Date</TableCell>
+                <TableCell  style={{color:'white', whiteSpace: 'nowrap'}}>Approved By</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {expenseData.map((expense) => (
-                <tr key={expense._id}>
-                  <td>{expense.eid}</td>
-                  <td>{expense.date.substring(0, 10)}</td>
-                  <td>{expense.category}</td>
-                  <td>{expense.description}</td>
-                  <td>{expense.amount}</td>
-                  <td>{expense.status}</td>
-                  <td>{expense.approvedDate.substring(0, 10)}</td>
-                  <td>{expense.approvedBy}</td>
-                </tr>
+                <TableRow key={expense._id}>
+                  <TableCell>{expense.eid}</TableCell>
+                  <TableCell>{expense.date.substring(0, 10)}</TableCell>
+                  <TableCell>{expense.category}</TableCell>
+                  <TableCell>{expense.description}</TableCell>
+                  <TableCell>{expense.amount}</TableCell>
+                  <TableCell>{expense.status}</TableCell>
+                  <TableCell>{expense.approvedDate.substring(0, 10)}</TableCell>
+                  <TableCell>{expense.approvedBy}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+          </Table>
+        </Paper>
       )}
+    
+      <Button onClick={handleDownloadPDF} variant="contained" color="secondary">
+        Download as PDF
+      </Button>
     </div>
+   </Card>
   );
 };
 
-export default ExpenseReport;
+export default SearchAndFilter;

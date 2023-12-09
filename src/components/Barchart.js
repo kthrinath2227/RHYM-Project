@@ -49,12 +49,13 @@ export default function SimpleCharts() {
   return (
     <div className='Piechart-Container barchat-container '>
     <div className='card-paper-1'>
+    <h2>monthly Expenses</h2>
     {chartData.xAxis.length > 0 && chartData.series.length > 0 ? (
       <BarChart
         xAxis={chartData.xAxis}
         series={chartData.series}
         width={400}
-        height={360}
+        height={390}
         colors={barColors}
       />
     ) : (

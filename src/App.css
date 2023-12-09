@@ -15,7 +15,7 @@ body {
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border-width: 0px;  
-    background-color: #7356f0;
+    background-image: linear-gradient(to bottom , #0c218a,rgb(14, 66, 238));
     color:white;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@ h2 {
 .Card-container {
     width:100vw;
     max-height:100vh;
-    background-color: rgb(238, 238, 238);
+    background-color: #ffff;
     
 }
 .slider {
@@ -67,7 +67,7 @@ transition:width 0.1s ease;
     margin-left:30px ;
 }
 .active {
-    background: rgb(238, 238, 238);
+    background-color: #ffff;
     color:black;
 }
 
@@ -82,7 +82,7 @@ transition:width 0.1s ease;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-
+    margin-bottom: 30px ;
 }
 .month-card {
     background-color: #ffff;
@@ -93,17 +93,22 @@ transition:width 0.1s ease;
     justify-content: center;
     align-items: center;
     border-radius: 20px;  
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(226, 226, 226, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     font-size: medium;
 }
 .Piechart-Container {
     width:38vw;
-    height:18vw;
-    border-radius:30px;
+    height:40vh;
+    border-radius:20px;
     background-color: #ffff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(226, 226, 226, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-
+}
+.Calander {
+    width: 10vw;
+    height:3.5vh;
+    margin-right: 15px;
+    padding:5px;
 }
 .card-paper {
    text-align: center;
@@ -114,20 +119,21 @@ transition:width 0.1s ease;
 }
 .Piechart-Container-1 {
     width:18vw;
-    height:18vw;
-    border-radius:30px;
+    height:40vh;
+    border-radius:20px;
     background-color: #ffff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(207, 207, 207, 0.2), 0 6px 20px 0 rgba(0,0, 0, 0.19);
 }
 .card-paper-1{
     margin-left: 52px;
+    text-align: center;
 }
 .barchat-container {
     width:60vw;
+    margin-left: 30px;
 }
 .flex-charts {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    margin-right: 30px;
+    margin-top: 30px;
 }
