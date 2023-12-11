@@ -1,14 +1,17 @@
 const express =  require('express');
 const app = express()
 const cors=require('cors')
-const bodyParser=require('body-parser')
+const bodyParser=require('body-parser');
+
+
+const nodemailer = require('nodemailer');
+
 app.use(cors())
 app.use(express.json())//middleware
 const path = require('path');
 const multer=require('multer');
 const DB_URI="mongodb+srv://saikandula9278:ZPWADmVgFVdYYV0d@rhym-portal.ehvrq7e.mongodb.net/Rhym"
 const mongoose=require('mongoose')
-// const {Expense}=require('./model');
 const PORT = process.env.PORT || 8000;
 
 mongoose.connect(DB_URI).then((e)=>console.log("mongodb connected ")).catch((e)=>console.log(e))
@@ -16,7 +19,7 @@ mongoose.connect(DB_URI).then((e)=>console.log("mongodb connected ")).catch((e)=
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
-  },
+  },                                                                                                                                                                                                                                                                                                                  
   filename: function (req, file, cb) {
     const timestamp = Date.now(); // Get the current timestamp
     const originalName = path.parse(file.originalname).name; // Extract the original filename without extension
@@ -24,6 +27,171 @@ const storage = multer.diskStorage({
     cb(null, newFilename);
   },
 });
+
+//gamilcode 
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'noreply8985@gmail.com',
+    pass: 'snji zibr osxc nypj',
+  },
+});
+
+const generateVerificationCode = () => {
+  return Math.floor(100000 + Math.random() * 900000);
+};
+
+const verificationCodes = {};
+
+app.post('/send-verification-code', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).send('Email is required');
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send('User Not Found');
+    }
+    const verificationCode = generateVerificationCode();
+    verificationCodes[email] = verificationCode;
+
+    const mailOptions = {
+      from: 'noreply8985@gmail.com',
+      to: email,
+      subject: 'Forgot Password Verification Code',
+      text: `Your verification code is: ${verificationCode}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).send('Verification code sent successfully');
+  } catch (error) {
+    console.error('Error sending verification code:', error);
+    res.status(500).send( {error : 'Error sending verification code' } );
+  }
+});
+
+
+app.post('/verify-code', (req, res) => {
+  const { email, code } = req.body;
+
+  if (verificationCodes[email] && verificationCodes[email] == code) {
+    delete verificationCodes[email];
+    res.status(200).send('Verification successful');
+  } else {
+    res.status(400).send('Invalid verification code');
+  }
+});
+
+// const bcrypt = require('bcryptjs');
+
+app.post('/change-password', async (req, res) => {
+  try { 
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+      return res.status(400).send('Email and new password are required');
+    }
+
+    // Assume you have a MongoDB model named `User` with a field `password`
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).send('User Not Found');
+    }
+    const hashedPassword = await bcrypt.hash(newPassword,10);
+
+    // Update the password
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.status(200).send('Password changed successfully');
+  } catch (error) {
+    console.error('Error changing password:', error);
+    res.status(500).send('Error changing password');
+  }
+});
+
+
+
+
+
+
+// login page code
+const UserSchema = new mongoose.Schema({
+  email: String,
+  password: String,
+  username: String,
+  role: String,
+})
+const User = mongoose.model('User', UserSchema);
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+app.post('/register', async (req, res) => {
+  const { email, password, username, role} = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = new User({ email, password: hashedPassword, username, role });
+  await user.save();
+  res.send({ message: 'Registered successfully' });
+});
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    return res.status(400).send({ error: 'Invalid email or password' });
+  }
+  const token = jwt.sign({ userId: user.id }, 'SECRET_KEY', { expiresIn: '1h' });
+  res.send({ token, role: user.role});
+});
+
+// app.get('/getRegisteredEmails', async (req, res) => {
+//   try {
+//     const users = await User.find({}, 'email' , 'role'); // Query the database for all registered users and select only the 'email' field
+//     const emails = users.map(user => user.email, user.role); // Extract email addresses from the user objects
+//     res.json(emails); // Send the list of email addresses as a JSON response
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: 'An error occurred while fetching registered emails' });
+//   }
+// });
+
+
+app.get('/getRegisteredEmails', async (req, res) => {
+  try {
+    const users = await User.find({}, 'email role'); // Query the database for all registered users and select 'email' and 'role' fields
+    const emailsAndRoles = users.map(user => ({ email: user.email, role: user.role })); // Extract email addresses and roles from the user objects
+    res.json(emailsAndRoles); // Send the list of email addresses and roles as a JSON response
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'An error occurred while fetching registered emails' });
+  }
+});
+
+
+
+
+app.delete('/deleteRegisteredEmail/:email', async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ error: 'Email not found' });
+    }
+
+    await User.deleteOne({ _id: user._id }); // Delete the user with the specified email
+    res.send({ message: 'Registered email deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'An error occurred while deleting the registered email' });
+  }
+});
+
 
 const upload = multer({ storage: storage });
 
@@ -474,12 +642,16 @@ app.get('/getApprovedExpensesLast3Months', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+
 app.get('/getListOfMonths', async (req, res) => {
   try {
     const moment=require('moment')
-    const oldestExpense = await Expense.findOne({}, {}, { sort: { date: 1 } });
-    const newestExpense = await Expense.findOne({}, {}, { sort: { date: -1 } });
-
+    const oldestExpense = await Expense.findOne({ status:'approved'}, {}, { sort: { date: 1 } });
+    const newestExpense = await Expense.findOne({ status:'approved'}, {}, { sort: { date: -1 } });
+      console.log(oldestExpense)
+      console.log(newestExpense)
    
     const startMonth = oldestExpense ? moment(oldestExpense.date).startOf('month') : moment().startOf('month');
 
@@ -506,17 +678,51 @@ app.get('/getListOfMonths', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-app.get('/getListOfMonths', async (req, res) => {
+app.get('/getExpenseSummaryByCategory', async (req, res) => {
   try {
     const moment = require('moment');
 
-    const distinctMonths = await Expense.distinct('date', {});
+    const getMonthYearString = (date) => moment(date).format('MMMM-YYYY');
 
-    const listOfMonths = distinctMonths.map(date => moment(date).format('MMMM-YYYY'));
+    const expenses = await Expense.find().lean();
+    const approvedExpenses = await Expense.find({ status: 'approved' }).lean();
+    const summary = expenses.reduce((acc, expense) => {
+      const monthYear = getMonthYearString(expense.date);
+      const category = expense.category;
+      const status = expense.status || 'pending';
+      const amount = expense.amount || 0;
 
-    res.json(listOfMonths);
+      // Initialize counters for the month if not present
+      acc[monthYear] = acc[monthYear] || { categories: {}, counts: { approved: 0, rejected: 0, pending: 0 } };
+      acc[monthYear].categories[category] = acc[monthYear].categories[category] || { approved: 0, rejected: 0, pending: 0, amount: 0 };
+
+      // Accumulate amounts based on status
+      acc[monthYear].categories[category][status]++;
+      acc[monthYear].categories[category].amount += amount;
+      acc[monthYear].counts[status]++;
+      acc[monthYear].counts.amount += amount;
+
+      return acc;
+    }, {});
+
+    // Convert the summary into the desired format
+    const result = Object.entries(summary).reduce((formattedResult, [monthYear, data]) => {
+      formattedResult[monthYear] = {
+        ...Object.entries(data.categories).reduce((categoryResult, [category, counts]) => {
+          // Include amounts for all categories
+          categoryResult[category] = counts.amount;
+          return categoryResult;
+        }, {}),
+        pending: data.counts.pending,
+        approved: data.counts.approved,
+        rejected: data.counts.rejected,
+      };
+      return formattedResult;
+    }, {});
+
+    res.json(result);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching expense summary:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
