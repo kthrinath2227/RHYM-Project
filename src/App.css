@@ -76,6 +76,8 @@ transition:width 0.1s ease;
     flex-wrap: wrap;
     margin-bottom:20px;
     align-items: center;
+   
+
 }
 
 .month-container {
@@ -137,4 +139,118 @@ transition:width 0.1s ease;
 }
 .cot {
     width:65vw;
+}
+.body{
+    margin: 0px;
+    padding: 0px;
+    
+}
+.bg-container {
+    background-image: url("./Assets/login-bg.8a14dbde.jpg");
+    height: 100vh;
+    width:100%;
+    
+}
+.card-container {
+    color:black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 20%;
+}
+.container_card {
+    box-shadow: 10px 9px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color:rgb(88, 9, 153);
+    min-height: 60vh;
+    min-width:60vw;
+    background-image:url("./Assets/white.jpg");
+    background-size:cover;
+}
+
+@media (max-width: 767px) {
+    
+    .container_card {
+      width: 90vw;
+    }
+    .toggle-password-button {
+        right: 20vw;
+    }
+  }
+  
+.toggle-password-button {
+  position: absolute;
+  border-width: 0px;
+  background-color:transparent;
+  color: black;
+  font-size: 1.5vh;
+  margin-top: 20px;
+  right: 38vw;
+ 
+}
+.button-login {
+    color:white;
+    font-size:1vh;
+    min-width: 4vw;
+    min-height: 4vh;
+    border-radius: 10px;
+    border-width: 0px;
+    margin: 8px;
+    background-image: linear-gradient(to right, #2238ff 0%, #9733EE  51%, #DA22FF  100%);
+    box-shadow: rgba(0, 0, 0, 0.35) 15px 15px 15px;
+    transition: 0.5s;
+}
+
+  .button-login:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+  }
+ 
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.error {
+    color: red;
+    margin-left: 20px;
+    font-weight: 500;
+}
+.logo-1 {
+    width:15vw;
+    min-height:3vh;
+    margin: 20px;
+    background-color: transparent;
+}
+
+::placeholder {
+    font-weight: 400;
+    color:rgb(147, 15, 223);
+    font-size: 1.5vh;
+    padding: 10px;
+}
+.input {
+    
+    min-width: 25vw;
+    min-height:4vh;
+    margin:5px;
+    border-radius: 5px;
+    margin-bottom:15px;
+    border-width:1px;
+    border-color:#7722ff;
+    box-shadow: rgba(0, 0, 0, 0.35) 15px 15px 15px;
+    background-color: transparent;
+
+}
+.expense-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

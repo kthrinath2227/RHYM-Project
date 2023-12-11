@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Dialog,DialogContent, Card,CardHeader,Divider,DialogActions, TextField,Typography, Button,Snackbar,Alert } from '@mui/material';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+
 import Tooltip from '@mui/material/Tooltip';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
@@ -123,15 +122,17 @@ const updatedResponse = await axios.get('http://localhost:8000/getSubmittedExpen
       console.error('Error updating expenses:', error);
     }
   };
-  const showSnackbar = () => {
-    setSnackbarOpen(true);
-    setTimeout(() => {
-      setSnackbarOpen(false);
-    }, 5000);
-  };
+  // const showSnackbar = () => {
+  //   setSnackbarOpen(true);
+  //   setTimeout(() => {
+  //     setSnackbarOpen(false);
+  //   }, 5000);
+  // };
 
   return (
-    <Card className="expense-card" style={{width:'88vw',}}>
+    <div className="expense-card-container">
+      <div>
+      <Card className="expense-card" style={{width:'95vw',}}>
       <CardHeader
         title={
           <React.Fragment>
@@ -262,6 +263,8 @@ const updatedResponse = await axios.get('http://localhost:8000/getSubmittedExpen
       </Snackbar>
     </div>
     </Card>
+      </div>
+    </div>
   );
 };
 

@@ -10,6 +10,7 @@ import ExpenseReport from './ExpenseReport2';
 import ApprovalForm from './ExpenseApproval';
 import EditableExpensesForm from './Saved';
 import SaveIcon from '@mui/icons-material/Save';
+import Login from './components/login';
 
 
 
@@ -33,8 +34,6 @@ const Slider = () => {
         return <ExpenseReport />;
       case 'ApprovalForm':
         return <ApprovalForm />;
-        // case 'Logout':
-        // return <Logout/>;
       default:
         return <Dashboard />;
     }

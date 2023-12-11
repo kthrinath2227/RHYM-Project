@@ -113,10 +113,10 @@ export default function BarsDataset() {
       dataset={dataset}
       xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
       series={[
-        { dataKey: 'london', label: 'London', valueFormatter },
-        { dataKey: 'paris', label: 'Paris', valueFormatter },
-        { dataKey: 'newYork', label: 'New York', valueFormatter },
-        { dataKey: 'seoul', label: 'Seoul', valueFormatter },
+        { dataKey: 'london', label: 'Travel', valueFormatter },
+        { dataKey: 'paris', label: 'Power Bills', valueFormatter },
+        { dataKey: 'newYork', label: 'Travel', valueFormatter },
+        { dataKey: 'seoul', label: 'Food', valueFormatter },
       ]}
       {...chartSetting}
     />
